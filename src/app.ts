@@ -6,7 +6,6 @@ import { createSignal } from "./signal";
 export function App() {
   const [firstName, setFirstName] = createSignal("John");
   const [lastName, setLastName] = createSignal("Doe");
-  const [counter, setCounter] = createSignal(1);
 
   const onFirstNameChange = (e: Event) => {
     setFirstName((e.target as HTMLInputElement).value);
@@ -20,9 +19,7 @@ export function App() {
     return firstName() + ' ' + lastName();
   });
 
-  setInterval(() => {
-    setCounter(counter() + 1);
-  }, 1000);
+  console.log('Inside App component');
 
   /*
     <div>
@@ -30,13 +27,14 @@ export function App() {
         <input value="..." oninput="..." style="...">
         <input value="..." oninput="..." style="...">
       </div>
+      <br />
       <div>...</div>
     </div>
     
     The following code is equivalent in structure to the above JSX pseudo code
   */
-  return createElement('div', {}, [
-    () => createElement('div', { style: () => "display: flex; gap: 5px" }, [
+  return createElement('div', { style: () => "padding: 3rem; border: solid" }, [
+    () => createElement('div', { style: () => "display: flex; gap: 5px;" }, [
       () => createElement('input', {
         value: firstName,
         input: () => onFirstNameChange,
@@ -48,7 +46,10 @@ export function App() {
         style: () => "padding: 5px"
       }),
     ]),
-    () => createElement('div', {}, [() => "Full name: ", fullName, () => ` Counter: ${counter()}`])
+    () => createElement('br'),
+    () => createElement('div', {}, [
+      () => `Full name: ${fullName()}`,
+    ])
   ]);
 }
 
